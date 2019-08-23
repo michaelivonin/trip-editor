@@ -3,6 +3,23 @@ import './App.sass';
 import Input from './components/Input/Input'
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {value: ''};
+  }
+
+  handleChange(event) {
+    this.setState({
+      value: event.target.value
+    });
+  }
+
+  handleSubmit() {
+    alert(this.state.value);
+  }
+
   render() {
     return (
       <div className="App">
@@ -20,8 +37,10 @@ class App extends React.Component {
             Learn React
           </a>
           <Input
-            className='app__button'
-            value='Click me!'
+            className='app__input'
+            placeholder='Add new point'
+            onInputChange={this.handleChange}
+            onInputSubmit={this.handleSubmit}
           />
         </header>
       </div>
