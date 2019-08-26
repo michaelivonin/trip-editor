@@ -13,8 +13,8 @@ class Input extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.onInputSubmit();
     event.preventDefault();
+    this.props.onInputSubmit();
   }
 
   render() {
@@ -34,7 +34,6 @@ class Input extends React.Component {
           />
         </label>
       </form>
-
     );
   }
 }
