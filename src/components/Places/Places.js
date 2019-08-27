@@ -12,15 +12,18 @@ class Places extends React.Component {
   }
 
   render() {
-    const className = this.props.className;
     const places = this.props.places;
 
     return (
-      <ol className={className}>
+      <ol className={this.props.className}>
         {places.map(place => (
-          <li key={place.address}>
+          <li
+            className="App__places-item"
+            key={place.address}
+          >
             {place.address}
             <button
+              className="App__places-button"
               key={place.address}
               onClick={() => this.deletePlace(place.address)}
             >

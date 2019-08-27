@@ -11,7 +11,6 @@ class App extends React.Component {
     this.deletePlace = this.deletePlace.bind(this);
     this.state = {
       places: [],
-      pointCount: 1,
       point: '',
     };
   }
@@ -24,24 +23,21 @@ class App extends React.Component {
 
   handleSubmit() {
     if (!this.state.point.length) return;
-    let count = this.state.pointCount;
     const newPoint = {
       address: this.state.point,
-      count: count,
     };
     this.setState({
       places: this.state.places.concat(newPoint),
-      pointCount: ++count,
       point: '',
     });
   }
 
   deletePlace(index) {
-    const places = this.state.places.filter(place => place.address !== index);
-    let count = this.state.pointCount;
+    const places = this.state.places.filter(place => {
+      return place.address !== index
+    });
     this.setState({
       places: places,
-      pointCount: --count,
     });
   }
 

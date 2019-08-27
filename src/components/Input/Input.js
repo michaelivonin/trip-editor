@@ -18,18 +18,14 @@ class Input extends React.Component {
   }
 
   render() {
-    const className = this.props.className;
-    const placeholder = this.props.placeholder;
-    const value = this.props.value;
-
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           <input
-            className={className}
+            className={this.props.className}
             type="text"
-            placeholder={placeholder}
-            value={value}
+            placeholder={this.props.placeholder}
+            value={this.props.value}
             onChange={this.handleChange}
           />
         </label>
