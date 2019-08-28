@@ -24,6 +24,7 @@ class Input extends React.Component {
           <input
             className={this.props.className}
             type="text"
+            autoFocus
             placeholder={this.props.placeholder}
             value={this.props.value}
             onChange={this.handleChange}

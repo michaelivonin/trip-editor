@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.sass';
 import Input from './components/Input/Input'
-import Places from './components/Places/Places'
+import { List, arrayMove } from 'react-movable';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,9 +23,7 @@ class App extends React.Component {
 
   handleSubmit() {
     if (!this.state.point.length) return;
-    const newPoint = {
-      address: this.state.point,
-    };
+    const newPoint =  this.state.point;
     this.setState({
       places: this.state.places.concat(newPoint),
       point: '',
@@ -51,11 +49,21 @@ class App extends React.Component {
           onInputChange={this.handleChange}
           onInputSubmit={this.handleSubmit}
         />
-       <Places
+        <List className="App__places"
+          values={this.state.places}
+          onChange={({ oldIndex, newIndex }) =>
+            this.setState(prevState => ({
+              places: arrayMove(prevState.places, oldIndex, newIndex)
+            }))
+          }
+          renderList={({ children, props }) => <ol {...props}>{children}</ol>}
+          renderItem={({ value, props }) => <li {...props}>{value}</li>}
+        />
+        {/*<Places
          className='App__places'
          places={this.state.places}
          onButtonClick={this.deletePlace}
-       />
+       />*/}
       </div>
     );
   }

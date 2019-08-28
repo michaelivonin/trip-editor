@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import './Places.sass';
 
 class Places extends React.Component {
@@ -15,25 +15,23 @@ class Places extends React.Component {
     const places = this.props.places;
 
     return (
-      <ol className={this.props.className}>
-        {places.map(place => (
-          <li
-            className="App__places-item"
+      /{places.map(place => (
+        <li
+          className="App__places-item"
+          key={place.address}
+        >
+          {place.address}
+          <button
+            className="App__places-button"
             key={place.address}
+            onClick={() => this.deletePlace(place.address)}
           >
-            {place.address}
-            <button
-              className="App__places-button"
-              key={place.address}
-              onClick={() => this.deletePlace(place.address)}
-            >
-              &#10006;
-            </button>
-          </li>
-        ))}
-      </ol>
+            &#10006;
+          </button>
+        </li>
+      ))}
     );
   }
-}
+}*/
 
-export default Places;
+//export default Places;
