@@ -1,37 +1,50 @@
-/*import React from 'react';
+import React from 'react';
 import './Places.sass';
+import { List } from "react-movable";
 
 class Places extends React.Component {
   constructor(props) {
     super(props);
-    this.deletePlace = this.deletePlace.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
-  deletePlace(index) {
-    this.props.onButtonClick(index);
+  handleMove(args) {
+    this.props.onPointMove(args);
+  }
+
+  handleRemove(args) {
+    this.props.onButtonDelete(args);
   }
 
   render() {
-    const places = this.props.places;
-
     return (
-      /{places.map(place => (
-        <li
-          className="App__places-item"
-          key={place.address}
-        >
-          {place.address}
-          <button
-            className="App__places-button"
-            key={place.address}
-            onClick={() => this.deletePlace(place.address)}
+      <List values={this.props.places}
+        onChange={({ oldIndex, newIndex }) =>
+          this.handleMove({ oldIndex, newIndex })
+        }
+        renderList={({ children, props }) => (
+          <ol className={this.props.className}
+            {...props}
           >
-            &#10006;
-          </button>
-        </li>
-      ))}
+            {children}
+          </ol>
+        )}
+        renderItem={({ value, props, index }) => (
+          <li className="App__places-item"
+            {...props}
+          >
+            {value}
+            <button className="App__places-button"
+              onClick={() => this.handleRemove(index)}
+            >
+              &#10006;
+            </button>
+          </li>
+        )}
+      />
     );
   }
-}*/
+}
 
-//export default Places;
+export default Places;

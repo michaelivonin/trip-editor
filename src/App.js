@@ -1,14 +1,16 @@
 import React from 'react';
 import './App.sass';
 import Input from './components/Input/Input'
-import { List, arrayMove } from 'react-movable';
+import Places from './components/Places/Places'
+import { arrayMove, arrayRemove } from "react-movable";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.deletePlace = this.deletePlace.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.state = {
       places: [],
       point: '',
@@ -30,13 +32,19 @@ class App extends React.Component {
     });
   }
 
-  deletePlace(index) {
-    const places = this.state.places.filter(place => {
-      return place.address !== index
-    });
-    this.setState({
-      places: places,
-    });
+  handleMove({ oldIndex, newIndex }) {
+    this.setState(prevState => ({
+      places: arrayMove(prevState.places, oldIndex, newIndex)
+    }));
+  }
+
+  handleRemove(index) {
+    this.setState(prevProps => ({
+      places:
+        typeof index !== 'undefined'
+          ? arrayRemove(prevProps.places, index)
+          : prevProps.places
+    }));
   }
 
   render() {
@@ -49,21 +57,12 @@ class App extends React.Component {
           onInputChange={this.handleChange}
           onInputSubmit={this.handleSubmit}
         />
-        <List className="App__places"
-          values={this.state.places}
-          onChange={({ oldIndex, newIndex }) =>
-            this.setState(prevState => ({
-              places: arrayMove(prevState.places, oldIndex, newIndex)
-            }))
-          }
-          renderList={({ children, props }) => <ol {...props}>{children}</ol>}
-          renderItem={({ value, props }) => <li {...props}>{value}</li>}
-        />
-        {/*<Places
+        <Places
          className='App__places'
          places={this.state.places}
-         onButtonClick={this.deletePlace}
-       />*/}
+         onPointMove={this.handleMove}
+         onButtonDelete={this.handleRemove}
+       />
       </div>
     );
   }

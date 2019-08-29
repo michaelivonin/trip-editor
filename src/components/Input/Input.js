@@ -8,8 +8,8 @@ class Input extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.props.onInputChange(event);
+  handleChange(args) {
+    this.props.onInputChange(args);
   }
 
   handleSubmit(event) {
