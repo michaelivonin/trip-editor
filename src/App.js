@@ -3,6 +3,7 @@ import './App.sass';
 import Input from './components/Input/Input'
 import Places from './components/Places/Places'
 import { arrayMove, arrayRemove } from "react-movable";
+import YMap from './components/YMap/YMap';
 
 class App extends React.Component {
   constructor(props) {
@@ -57,12 +58,15 @@ class App extends React.Component {
           onInputChange={this.handleChange}
           onInputSubmit={this.handleSubmit}
         />
-        <Places
-         className='App__places'
-         places={this.state.places}
-         onPointMove={this.handleMove}
-         onButtonDelete={this.handleRemove}
-       />
+        {!this.state.places.length ||
+          <Places
+            className='App__places'
+            places={this.state.places}
+            onPointMove={this.handleMove}
+            onButtonDelete={this.handleRemove}
+          />
+        }
+       <YMap className="App__map-wrapper"/>
       </div>
     );
   }
