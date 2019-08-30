@@ -34,13 +34,13 @@ class App extends React.Component {
   }
 
   handleMove({ oldIndex, newIndex }) {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       places: arrayMove(prevState.places, oldIndex, newIndex)
     }));
   }
 
   handleRemove(index) {
-    this.setState(prevProps => ({
+    this.setState((prevProps) => ({
       places:
         typeof index !== 'undefined'
           ? arrayRemove(prevProps.places, index)
@@ -66,7 +66,10 @@ class App extends React.Component {
             onButtonDelete={this.handleRemove}
           />
         }
-       <YMap className="App__map-wrapper"/>
+        <YMap
+          className="App__map-wrapper"
+          places={this.state.places}
+        />
       </div>
     );
   }

@@ -19,23 +19,27 @@ class Places extends React.Component {
 
   render() {
     return (
-      <List values={this.props.places}
+      <List
+        values={this.props.places}
         onChange={({ oldIndex, newIndex }) =>
           this.handleMove({ oldIndex, newIndex })
         }
         renderList={({ children, props }) => (
-          <ol className={this.props.className}
+          <ol
+            className={this.props.className}
             {...props}
           >
             {children}
           </ol>
         )}
         renderItem={({ value, props, index }) => (
-          <li className="App__places-item"
+          <li
+            className="App__places-item"
             {...props}
           >
             {value}
-            <button className="App__places-button"
+            <button
+              className="App__places-button"
               onClick={() => this.handleRemove(index)}
             >
               &#10006;
