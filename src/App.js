@@ -13,6 +13,7 @@ class App extends React.Component {
     this.handleMove = this.handleMove.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.transfer = this.transfer.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
     this.state = {
       places: [],
       point: '',
@@ -54,6 +55,7 @@ class App extends React.Component {
         },
         (err) => console.log(err.message)
       );
+    console.log(this.state.places)
   }
 
   handleMove({ oldIndex, newIndex }) {
@@ -75,6 +77,27 @@ class App extends React.Component {
     this.setState({
       ymaps: ymaps,
     });
+  }
+
+  handleDrag(event, index) {
+    const places = this.state.places;
+    const newCoordinates = event.get('target').geometry.getCoordinates()
+      .map(coord => +coord.toPrecision(8));
+    const newAddress = this.state.ymaps.geocode(newCoordinates);
+    newAddress
+      .then(
+        (result) => {
+          const newPoint = {
+            address: result.geoObjects.get(0).properties.getAll().text,
+            coordinates: newCoordinates,
+          };
+          this.setState({
+            places: places.splice(--index, 1, newPoint),
+          });
+        },
+        (err) => console.log(err.message)
+      );
+    console.log(this.state.places);
   }
 
   render() {
@@ -99,6 +122,7 @@ class App extends React.Component {
           className="App__map-wrapper"
           places={this.state.places}
           handleTransfer={this.transfer}
+          onDragEnd={this.handleDrag}
         />
       </div>
     );

@@ -6,10 +6,15 @@ class YMap extends React.Component {
   constructor(props) {
     super(props);
     this.transfer = this.transfer.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
   }
 
   transfer(args) {
     this.props.handleTransfer(args);
+  }
+
+  handleDrag(event, index) {
+    this.props.onDragEnd(event, index);
   }
 
   render() {
@@ -43,6 +48,7 @@ class YMap extends React.Component {
                     preset: 'islands#blackStretchyIcon',
                     draggable: true,
                   }}
+                  onDragEnd={(event) => this.handleDrag(event, i)}
                 />
               ))
             }
