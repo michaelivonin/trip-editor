@@ -12,9 +12,11 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMove = this.handleMove.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.transfer = this.transfer.bind(this);
     this.state = {
       places: [],
       point: '',
+      ymaps: null,
     };
   }
 
@@ -27,10 +29,28 @@ class App extends React.Component {
   handleSubmit() {
     if (!this.state.point.length) return;
     const newPoint =  this.state.point;
-    this.setState({
-      places: this.state.places.concat(newPoint),
-      point: '',
-    });
+    const askGeocode = this.state.ymaps.geocode(newPoint);
+    askGeocode
+      .then(
+        (result) => {
+          if (!result.metaData.geocoder.found) {
+            alert('Incorrect input! Please repeat.');
+            this.setState({
+              point: '',
+            });
+            return;
+          }
+          const newPoint = {
+            address: this.state.point,
+            coordinates: result.geoObjects.get(0).geometry.getCoordinates(),
+          };
+          this.setState({
+            places: this.state.places.concat(newPoint),
+            point: '',
+          });
+        },
+        (err) => console.log(err.message)
+      );
   }
 
   handleMove({ oldIndex, newIndex }) {
@@ -46,6 +66,12 @@ class App extends React.Component {
           ? arrayRemove(prevProps.places, index)
           : prevProps.places
     }));
+  }
+
+  transfer(ymaps) {
+    this.setState({
+      ymaps: ymaps,
+    });
   }
 
   render() {
@@ -69,6 +95,7 @@ class App extends React.Component {
         <YMap
           className="App__map-wrapper"
           places={this.state.places}
+          handleTransfer={this.transfer}
         />
       </div>
     );

@@ -1,30 +1,16 @@
 import React from 'react';
 import './YMap.sass';
-import { YMaps, Map, /*Placemark*/ } from 'react-yandex-maps';
+import { YMaps, Map, Placemark, Polyline } from 'react-yandex-maps';
 
 class YMap extends React.Component {
   constructor(props) {
     super(props);
-    //this.handleApiAvaliable = this.handleApiAvaliable.bind(this);
-    //this.geocode = this.geocode.bind(this);
-    this.state = {
-      ymaps: null,
-      coords: null,
-    };
+    this.transfer = this.transfer.bind(this);
   }
 
-  /*handleApiAvaliable(ymaps) {
-    this.getGeoLocation(ymaps);
-  };*/
-
-  geocode(data) {
-    //let coords = null;
-    let getCoords = this.state.ymaps.geocode(data);
-    getCoords.then((result) => this.setState({
-      coords: result.geoObjects.get(0).geometry.getCoordinates()
-    }));
-    console.log(this.state.coords);
-  };
+  transfer(args) {
+    this.props.handleTransfer(args);
+  }
 
   render() {
     const places = this.props.places;
@@ -35,17 +21,43 @@ class YMap extends React.Component {
       >
         <div className={this.props.className}>
           <Map
-            onLoad={(ymaps) => this.setState({
-              ymaps: ymaps,
-            })}
-            defaultState={{ center: [55.75, 37.57], zoom: 9 }}
+            className="App__map"
+            onLoad={(ymaps) => this.transfer(ymaps)}
+            defaultState={{
+              center: [55.75, 37.57],
+              zoom: 3,
+            }}
             modules={['geocode']}
           >
-            {!this.state.coords ||
+            {!places.length ||
               places.map((place, i) => (
-                /*this.state.ymaps.geocode(place).then(result => console.log(result.geoObjects.get(0).geometry.getCoordinates()))*/
-                this.geocode(place)
+                <Placemark
+                  key={i}
+                  geometry={place.coordinates}
+                  modules={['geoObject.addon.balloon']}
+                  properties={{
+                    iconContent: ++i,
+                    balloonContent: place.address,
+                  }}
+                  options={{
+                    preset: 'islands#blackStretchyIcon',
+                    draggable: true,
+                  }}
+                />
               ))
+            }
+            {places.length > 1 ?
+              (
+                <Polyline
+                  geometry={places.map((place) => place.coordinates)}
+                  options={{
+                    balloonCloseButton: false,
+                    strokeColor: '#000',
+                    strokeWidth: 4,
+                    strokeOpacity: 0.5,
+                  }}
+                />
+              ) : null
             }
           </Map>
         </div>

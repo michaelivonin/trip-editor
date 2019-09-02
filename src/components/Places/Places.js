@@ -36,8 +36,10 @@ class Places extends React.Component {
           <li
             className="App__places-item"
             {...props}
+            onMouseDown={(event) => event.target.classList.add('App__places-item_grabbing')}
+            onMouseUp={(event) => event.target.classList.remove('App__places-item_grabbing')}
           >
-            {value}
+            {value.address}
             <button
               className="App__places-button"
               onClick={() => this.handleRemove(index)}
