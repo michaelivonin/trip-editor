@@ -27,14 +27,17 @@ class App extends React.Component {
   }
 
   handleSubmit() {
-    if (!this.state.point.length) return;
+    if (!this.state.point.length) {
+      alert('Enter address, please.');
+      return;
+    }
     const newPoint =  this.state.point;
     const askGeocode = this.state.ymaps.geocode(newPoint);
     askGeocode
       .then(
         (result) => {
           if (!result.metaData.geocoder.found) {
-            alert('Incorrect input! Please repeat.');
+            alert('Incorrect input! Repeat, please.');
             this.setState({
               point: '',
             });

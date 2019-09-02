@@ -24,23 +24,26 @@ class Places extends React.Component {
         onChange={({ oldIndex, newIndex }) =>
           this.handleMove({ oldIndex, newIndex })
         }
-        renderList={({ children, props }) => (
+        renderList={({ children, props, isDragged }) => (
           <ol
             className={this.props.className}
             {...props}
+            style={{cursor: isDragged ? 'grabbing' : 'inherit'}}
           >
             {children}
           </ol>
         )}
-        renderItem={({ value, props, index }) => (
+        renderItem={({ value, props, isDragged, index }) => (
           <li
             className="App__places-item"
             {...props}
-            onMouseDown={(event) => event.target.classList.add('App__places-item_grabbing')}
-            onMouseUp={(event) => event.target.classList.remove('App__places-item_grabbing')}
+            style={{
+              ...props.style,
+              cursor: isDragged ? 'grabbing' : 'grab',
+            }}
           >
             {value.address}
-            <button
+          <button
               className="App__places-button"
               onClick={() => this.handleRemove(index)}
             >
