@@ -55,7 +55,6 @@ class App extends React.Component {
         },
         (err) => console.log(err.message)
       );
-    console.log(this.state.places)
   }
 
   handleMove({ oldIndex, newIndex }) {
@@ -91,13 +90,13 @@ class App extends React.Component {
             address: result.geoObjects.get(0).properties.getAll().text,
             coordinates: newCoordinates,
           };
+          places.splice(--index, 1, newPoint);
           this.setState({
-            places: places.splice(--index, 1, newPoint),
+            places: places,
           });
         },
         (err) => console.log(err.message)
       );
-    console.log(this.state.places);
   }
 
   render() {
