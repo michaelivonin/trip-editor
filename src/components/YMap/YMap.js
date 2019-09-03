@@ -19,6 +19,15 @@ class YMap extends React.Component {
 
   render() {
     const places = this.props.places;
+    if (places.length === 1) {
+      this.map.setCenter(places[0].coordinates, 9);
+    }
+    if (places.length > 1) {
+      this.map.setBounds(
+        this.map.geoObjects.getBounds(),
+        {checkZoomRange: true}
+      );
+    }
 
     return (
       <YMaps
@@ -30,16 +39,11 @@ class YMap extends React.Component {
             onLoad={(ymaps) => this.transfer(ymaps)}
             defaultState={{
               center: [55.75, 37.57],
-              zoom: 3,
+              zoom: 9,
             }}
             modules={['geocode']}
-            instanceRef={this.setMapControlInstanceRef}
+            instanceRef={(ref) => this.map = ref}
           >
-            {this.map.setBounds(
-              places.map((place) => place.coordinates),
-              {checkZoomRange: true}
-            )
-            }
             {!places.length ||
               places.map((place, i) => (
                 <Placemark
@@ -72,12 +76,18 @@ class YMap extends React.Component {
               ) : null
             }
           </Map>
+          {/*places.length === 1 ?
+            this.map.setCenter(places[0].coordinates, 9)
+            : places.length > 1 ?
+              this.map.setBounds(
+                this.map.geoObjects.getBounds(),
+                {checkZoomRange: true}
+              )
+              : null
+          */}
         </div>
       </YMaps>
     );
-  }
-  setMapControlInstanceRef = (ref) => {
-    this.map = ref;
   }
 }
 
