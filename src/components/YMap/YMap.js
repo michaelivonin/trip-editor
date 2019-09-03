@@ -33,7 +33,13 @@ class YMap extends React.Component {
               zoom: 3,
             }}
             modules={['geocode']}
+            instanceRef={this.setMapControlInstanceRef}
           >
+            {this.map.setBounds(
+              places.map((place) => place.coordinates),
+              {checkZoomRange: true}
+            )
+            }
             {!places.length ||
               places.map((place, i) => (
                 <Placemark
@@ -41,7 +47,7 @@ class YMap extends React.Component {
                   geometry={place.coordinates}
                   modules={['geoObject.addon.balloon']}
                   properties={{
-                    iconContent: ++i,
+                    iconContent: i + 1,
                     balloonContent: place.address,
                   }}
                   options={{
@@ -69,6 +75,9 @@ class YMap extends React.Component {
         </div>
       </YMaps>
     );
+  }
+  setMapControlInstanceRef = (ref) => {
+    this.map = ref;
   }
 }
 

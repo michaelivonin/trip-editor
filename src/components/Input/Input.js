@@ -19,7 +19,10 @@ class Input extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        className="App__form"
+        onSubmit={this.handleSubmit}
+      >
         <label>
           <input
             className={this.props.className}

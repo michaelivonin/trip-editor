@@ -1,5 +1,19 @@
 .App
   background-color: dimgrey
   max-width: 1200px
-  height: 100vh
+  min-width: 768px
+  height: calc(100vh - 40px)
   margin: 0 auto
+  padding: 20px 20px
+
+  &__column1
+    display: inline-block
+    width: 35%
+    height: 100%
+    float: left
+    margin-right: 15px
+
+  &__column2
+    display: inline-block
+    width: calc(65% - 15px)
+    height: 100%

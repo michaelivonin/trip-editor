@@ -81,7 +81,7 @@ class App extends React.Component {
   handleDrag(event, index) {
     const places = this.state.places;
     const newCoordinates = event.get('target').geometry.getCoordinates()
-      .map(coord => +coord.toPrecision(8));
+      .map((coord) => +coord.toPrecision(8));
     const newAddress = this.state.ymaps.geocode(newCoordinates);
     newAddress
       .then(
@@ -90,7 +90,7 @@ class App extends React.Component {
             address: result.geoObjects.get(0).properties.getAll().text,
             coordinates: newCoordinates,
           };
-          places.splice(--index, 1, newPoint);
+          Object.assign(places[index], newPoint);
           this.setState({
             places: places,
           });
@@ -102,27 +102,35 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Input
-          className='App__input'
-          placeholder='Add new point'
-          value={this.state.point}
-          onInputChange={this.handleChange}
-          onInputSubmit={this.handleSubmit}
-        />
-        {!this.state.places.length ||
+        <div
+          className="App__column1"
+        >
+          <Input
+            className='App__input'
+            placeholder='Add new point'
+            value={this.state.point}
+            onInputChange={this.handleChange}
+            onInputSubmit={this.handleSubmit}
+          />
+          {!this.state.places.length ||
           <Places
             className='App__places'
             places={this.state.places}
             onPointMove={this.handleMove}
             onButtonDelete={this.handleRemove}
           />
-        }
-        <YMap
-          className="App__map-wrapper"
-          places={this.state.places}
-          handleTransfer={this.transfer}
-          onDragEnd={this.handleDrag}
-        />
+          }
+        </div>
+        <div
+          className="App__column2"
+        >
+          <YMap
+            className="App__map-wrapper"
+            places={this.state.places}
+            handleTransfer={this.transfer}
+            onDragEnd={this.handleDrag}
+          />
+        </div>
       </div>
     );
   }

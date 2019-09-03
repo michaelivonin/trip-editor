@@ -42,13 +42,17 @@ class Places extends React.Component {
               cursor: isDragged ? 'grabbing' : 'grab',
             }}
           >
-            {value.address}
-          <button
-              className="App__places-button"
-              onClick={() => this.handleRemove(index)}
+            <div
+              className="App__value-wrapper"
             >
-              &#10006;
-            </button>
+              <div>{value.address}</div>{' '}
+              <button
+                className="App__places-button"
+                onClick={() => this.handleRemove(index)}
+              >
+                &#10006;
+              </button>
+            </div>
           </li>
         )}
       />
