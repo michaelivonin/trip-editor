@@ -6,11 +6,26 @@ class YMap extends React.Component {
   constructor(props) {
     super(props);
     this.transfer = this.transfer.bind(this);
+    this.setNewBounds = this.setNewBounds.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
   }
 
   transfer(args) {
     this.props.handleTransfer(args);
+  }
+
+  setNewBounds(map, places) {
+    if (places.length === 1) {
+      map.setCenter(places[0].coordinates, 9, {duration: 350});
+    }
+    if (places.length > 1) {
+      map.setBounds(
+        map.geoObjects.getBounds(), {
+          checkZoomRange: true,
+          duration: 350,
+        }
+      );
+    }
   }
 
   handleDrag(event, index) {
@@ -19,15 +34,6 @@ class YMap extends React.Component {
 
   render() {
     const places = this.props.places;
-    if (places.length === 1) {
-      this.map.setCenter(places[0].coordinates, 9);
-    }
-    if (places.length > 1) {
-      this.map.setBounds(
-        this.map.geoObjects.getBounds(),
-        {checkZoomRange: true}
-      );
-    }
 
     return (
       <YMaps
@@ -58,7 +64,11 @@ class YMap extends React.Component {
                     preset: 'islands#blackStretchyIcon',
                     draggable: true,
                   }}
-                  onDragEnd={(event) => this.handleDrag(event, i)}
+                  onOverlayChange={() => this.setNewBounds(this.map, places)}
+                  onDragEnd={(event) => {
+                    this.handleDrag(event, i);
+                    this.setNewBounds(this.map, places);
+                  }}
                 />
               ))
             }
@@ -73,18 +83,10 @@ class YMap extends React.Component {
                     strokeOpacity: 0.5,
                   }}
                 />
-              ) : null
-            }
-          </Map>
-          {/*places.length === 1 ?
-            this.map.setCenter(places[0].coordinates, 9)
-            : places.length > 1 ?
-              this.map.setBounds(
-                this.map.geoObjects.getBounds(),
-                {checkZoomRange: true}
               )
               : null
-          */}
+            }
+          </Map>
         </div>
       </YMaps>
     );
