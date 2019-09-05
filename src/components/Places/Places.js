@@ -42,9 +42,7 @@ class Places extends React.Component {
               cursor: isDragged ? 'grabbing' : 'grab',
             }}
           >
-            <div
-              className="App__value-wrapper"
-            >
+            <div className="App__value-wrapper">
               <div>{value.address}</div>{' '}
               <button
                 className="App__places-button"

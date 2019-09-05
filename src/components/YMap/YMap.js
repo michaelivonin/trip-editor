@@ -10,20 +10,20 @@ class YMap extends React.Component {
     this.handleDrag = this.handleDrag.bind(this);
   }
 
-  transfer(args) {
-    this.props.handleTransfer(args);
+  transfer(ymaps) {
+    this.props.handleTransfer(ymaps);
   }
 
-  setNewBounds(map, places) {
-    if (places.length === 1) {
-      map.setCenter(places[0].coordinates, 9, {duration: 350});
+  setNewBounds(map) {
+    const objects = map.geoObjects;
+    if (objects.getLength() === 1) {
+      map.setCenter(
+        objects.get(0).geometry.getCoordinates(), 9, {duration: 350}
+      );
     }
-    if (places.length > 1) {
+    if (objects.getLength() > 1) {
       map.setBounds(
-        map.geoObjects.getBounds(), {
-          checkZoomRange: true,
-          duration: 350,
-        }
+        objects.getBounds(), {checkZoomRange: true, duration: 350,}
       );
     }
   }
@@ -36,55 +36,50 @@ class YMap extends React.Component {
     const places = this.props.places;
 
     return (
-      <YMaps
-        query={{apikey: '9fbf58eb-f5d4-47d2-9d6b-7507e2ecb7c9'}}
-      >
+      <YMaps query={{apikey: '9fbf58eb-f5d4-47d2-9d6b-7507e2ecb7c9'}}>
         <div className={this.props.className}>
           <Map
             className="App__map"
-            onLoad={(ymaps) => this.transfer(ymaps)}
+            instanceRef={(ref) => this.map = ref}
+            onLoad={(ymaps) => {
+              this.transfer(ymaps);
+              this.map.geoObjects.events.add(
+                ['add', 'dragend', 'remove'], () => this.setNewBounds(this.map)
+              );
+            }}
             defaultState={{
               center: [55.75, 37.57],
               zoom: 9,
             }}
             modules={['geocode']}
-            instanceRef={(ref) => this.map = ref}
           >
-            {!places.length ||
-              places.map((place, i) => (
-                <Placemark
-                  key={i}
-                  geometry={place.coordinates}
-                  modules={['geoObject.addon.balloon']}
-                  properties={{
-                    iconContent: i + 1,
-                    balloonContent: place.address,
-                  }}
-                  options={{
-                    preset: 'islands#blackStretchyIcon',
-                    draggable: true,
-                  }}
-                  onOverlayChange={() => this.setNewBounds(this.map, places)}
-                  onDragEnd={(event) => {
-                    this.handleDrag(event, i);
-                    this.setNewBounds(this.map, places);
-                  }}
-                />
-              ))
-            }
+            {!places.length || places.map((place, i) => (
+              <Placemark
+                key={i}
+                geometry={place.coordinates}
+                modules={['geoObject.addon.balloon']}
+                properties={{
+                  iconContent: i + 1,
+                  balloonContent: place.address,
+                }}
+                options={{
+                  preset: 'islands#blackStretchyIcon',
+                  draggable: true,
+                }}
+                onDragEnd={(event) => this.handleDrag(event, i)}
+              />
+            ))}
             {places.length > 1 ?
-              (
-                <Polyline
-                  geometry={places.map((place) => place.coordinates)}
-                  options={{
-                    balloonCloseButton: false,
-                    strokeColor: '#000',
-                    strokeWidth: 4,
-                    strokeOpacity: 0.5,
-                  }}
-                />
-              )
-              : null
+              (<Polyline
+                geometry={places.map((place) => place.coordinates)}
+                options={{
+                  balloonCloseButton: false,
+                  strokeColor: '#000',
+                  strokeWidth: 4,
+                  strokeOpacity: 0.5,
+                }}
+              />) :
+              null
             }
           </Map>
         </div>
