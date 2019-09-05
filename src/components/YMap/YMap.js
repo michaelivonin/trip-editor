@@ -20,11 +20,13 @@ class YMap extends React.Component {
       map.setCenter(
         objects.get(0).geometry.getCoordinates(), 9, {duration: 350}
       );
+      console.log('1');
     }
     if (objects.getLength() > 1) {
       map.setBounds(
         objects.getBounds(), {checkZoomRange: true, duration: 350,}
       );
+      console.log('2');
     }
   }
 
