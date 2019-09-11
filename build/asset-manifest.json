@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/trip-editor/build/static/css/main.aac230f7.chunk.css",
+    "main.js": "/trip-editor/build/static/js/main.bd6c0d2f.chunk.js",
+    "main.js.map": "/trip-editor/build/static/js/main.bd6c0d2f.chunk.js.map",
+    "runtime~main.js": "/trip-editor/build/static/js/runtime~main.2c5c7e6f.js",
+    "runtime~main.js.map": "/trip-editor/build/static/js/runtime~main.2c5c7e6f.js.map",
+    "static/js/2.c08aa085.chunk.js": "/trip-editor/build/static/js/2.c08aa085.chunk.js",
+    "static/js/2.c08aa085.chunk.js.map": "/trip-editor/build/static/js/2.c08aa085.chunk.js.map",
+    "index.html": "/trip-editor/build/index.html",
+    "precache-manifest.fbc075e876493454648a170e3bdca6f8.js": "/trip-editor/build/precache-manifest.fbc075e876493454648a170e3bdca6f8.js",
+    "service-worker.js": "/trip-editor/build/service-worker.js",
+    "static/css/main.aac230f7.chunk.css.map": "/trip-editor/build/static/css/main.aac230f7.chunk.css.map"
+  }
+}
