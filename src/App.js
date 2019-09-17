@@ -100,8 +100,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App__column1">
+      <div className='App'>
+        <div className='App__column1'>
           <Input
             className='App__input'
             placeholder='Add new point'
@@ -118,9 +118,9 @@ class App extends React.Component {
             />
           }
         </div>
-        <div className="App__column2">
+        <div className='App__column2'>
           <YMap
-            className="App__map-wrapper"
+            className='App__map-wrapper'
             places={this.state.places}
             handleTransfer={this.transfer}
             onDragEnd={this.handleDrag}

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Places.sass';
-import { List } from "react-movable";
+import { List } from 'react-movable';
 
 class Places extends React.Component {
   constructor(props) {
@@ -35,17 +35,17 @@ class Places extends React.Component {
         )}
         renderItem={({ value, props, isDragged, index }) => (
           <li
-            className="App__places-item"
+            className='App__places-item'
             {...props}
             style={{
               ...props.style,
               cursor: isDragged ? 'grabbing' : 'grab',
             }}
           >
-            <div className="App__value-wrapper">
+            <div className='App__value-wrapper'>
               <div>{value.address}</div>{' '}
               <button
-                className="App__places-button"
+                className='App__places-button'
                 onClick={() => this.handleRemove(index)}
               >
                 &#10006;

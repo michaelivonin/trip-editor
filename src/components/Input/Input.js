@@ -20,13 +20,13 @@ class Input extends React.Component {
   render() {
     return (
       <form
-        className="App__form"
+        className='App__form'
         onSubmit={this.handleSubmit}
       >
         <label>
           <input
             className={this.props.className}
-            type="text"
+            type='text'
             autoFocus
             placeholder={this.props.placeholder}
             value={this.props.value}

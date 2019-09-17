@@ -39,7 +39,7 @@ class YMap extends React.Component {
       <YMaps query={{apikey: '9fbf58eb-f5d4-47d2-9d6b-7507e2ecb7c9'}}>
         <div className={this.props.className}>
           <Map
-            className="App__map"
+            className='App__map'
             instanceRef={(ref) => this.map = ref}
             onLoad={(ymaps) => {
               this.transfer(ymaps);
